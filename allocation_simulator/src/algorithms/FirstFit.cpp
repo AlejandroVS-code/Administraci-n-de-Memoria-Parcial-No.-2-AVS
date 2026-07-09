@@ -6,8 +6,8 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de la estrategia First Fit
 */
-#include "../../include/algorithms/FirstFit.h"
-#include "../../include/model/MemoryBlock.h"
+#include "algorithms/FirstFit.h"
+#include "model/MemoryBlock.h"
 
 FirstFit::FirstFit()
 {

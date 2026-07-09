@@ -6,8 +6,8 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de la estrategia Worst Fit
 */
-#include "../../include/algorithms/WorstFit.h"
-#include "../../include/model/MemoryBlock.h"
+#include "algorithms/WorstFit.h"
+#include "model/MemoryBlock.h"
 
 WorstFit::WorstFit()
 {

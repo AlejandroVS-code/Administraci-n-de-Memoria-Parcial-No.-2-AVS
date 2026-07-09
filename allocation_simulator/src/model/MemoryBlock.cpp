@@ -6,8 +6,8 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de la clase MemoryBlock
 */
-#include "../../include/model/MemoryBlock.h"
-#include "../../include/model/Process.h" //Necesito la definicion completa, en el .h bastaba el forward declaration
+#include "model/MemoryBlock.h"
+#include "model/Process.h" //Necesito la definicion completa, en el .h bastaba el forward declaration
 
 MemoryBlock::MemoryBlock()
 {

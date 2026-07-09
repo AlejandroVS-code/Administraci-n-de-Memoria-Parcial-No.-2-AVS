@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de SimulatorException
 */
-#include "../../include/exceptions/SimulatorException.h"
+#include "exceptions/SimulatorException.h"
 
 //Nota: aqui SI uso lista de inicializacion porque runtime_error no tiene
 //constructor por defecto, es la unica forma de pasarle el mensaje

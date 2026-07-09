@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de InvalidSizeException
 */
-#include "../../include/exceptions/InvalidSizeException.h"
+#include "exceptions/InvalidSizeException.h"
 #include <sstream>
 
 static std::string buildMessage(int size)

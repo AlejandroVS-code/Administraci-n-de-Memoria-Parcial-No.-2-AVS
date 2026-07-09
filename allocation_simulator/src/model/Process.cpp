@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de la clase Process
 */
-#include "../../include/model/Process.h"
+#include "model/Process.h"
 
 Process::Process()
 {

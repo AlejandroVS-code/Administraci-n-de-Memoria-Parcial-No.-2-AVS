@@ -6,13 +6,14 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de CliMenu
 */
-#include "../../include/ui/CliMenu.h"
-#include "../../include/exceptions/SimulatorException.h"
-#include "../../include/algorithms/FirstFit.h"
-#include "../../include/algorithms/BestFit.h"
-#include "../../include/algorithms/WorstFit.h"
+#include "ui/CliMenu.h"
+#include "exceptions/SimulatorException.h"
+#include "algorithms/FirstFit.h"
+#include "algorithms/BestFit.h"
+#include "algorithms/WorstFit.h"
 #include <iostream> //Libreria para leer y escribir por consola
 #include <fstream> //Libreria para escribir el archivo de salida
+#include <sstream>
 
 CliMenu::CliMenu()
 {
@@ -106,14 +107,17 @@ void CliMenu::showMemoryState() const
 
 void CliMenu::loadAndRunFile()
 {
-    std::string filePath;
-    std::cout << "Ingrese la ruta del archivo de entrada: ";
-    std::cin >> filePath;
+    std::string fileName;
+    std::cout << "Ingrese el nombre del archivo (debe estar en data/allocation/): ";
+    std::cin >> fileName;
+
+    //Armo la ruta completa, el usuario ya no necesita escribir la carpeta
+    std::string fullPath = "data/allocation/" + fileName;
 
     std::vector<Command> commands;
     try
     {
-        commands = this->fileReader.readCommands(filePath);
+        commands = this->fileReader.readCommands(fullPath);
     }
     catch (const SimulatorException& exceptionCaught)
     {
@@ -121,7 +125,6 @@ void CliMenu::loadAndRunFile()
         return;
     }
 
-    //Mapa auxiliar para resolver el label legible (A, B, C...) al id numerico interno
     std::map<std::string, int> labelToId;
     int nextId = 1;
 
@@ -168,16 +171,8 @@ void CliMenu::loadAndRunFile()
     }
 
     std::cout << "Ejecucion del archivo terminada." << std::endl;
-    std::cout << "Desea guardar el estado final en un archivo? (S/N): ";
-    char answer = 'N';
-    std::cin >> answer;
-    if (answer == 'S' || answer == 's')
-    {
-        std::string outputPath;
-        std::cout << "Ingrese la ruta del archivo de salida: ";
-        std::cin >> outputPath;
-        this->writeOutputFile(outputPath);
-    }
+
+    this->writeOutputFile(fileName);
 }
 
 void CliMenu::changeAllocationStrategy()
@@ -212,8 +207,19 @@ void CliMenu::changeAllocationStrategy()
     }
 }
 
-void CliMenu::writeOutputFile(const std::string& outputPath) const
+void CliMenu::writeOutputFile(const std::string& inputFileName) const
 {
+    
+    std::string baseName = inputFileName;
+    size_t extensionPosition = baseName.rfind(".txt");
+    if (extensionPosition != std::string::npos && extensionPosition == baseName.size() - 4)
+    {
+        baseName = baseName.substr(0, extensionPosition);
+    }
+
+    
+    std::string outputPath = "allocation_simulator/tests/" + baseName + "_output.txt";
+
     std::ofstream outputFile(outputPath);
     if (!outputFile.is_open())
     {
@@ -222,19 +228,25 @@ void CliMenu::writeOutputFile(const std::string& outputPath) const
     }
 
     const std::vector<MemoryBlock>& blocks = this->manager->getBlocks();
-    outputFile << "ESTADO FINAL DE LA MEMORIA" << std::endl;
+
+   
+    std::stringstream outputContent;
+    outputContent << "ESTADO FINAL DE LA MEMORIA" << std::endl;
     for (size_t i = 0; i < blocks.size(); i++)
     {
         const MemoryBlock& currentBlock = blocks.at(i);
-        outputFile << "Bloque " << i << " | Inicio: " << currentBlock.getStartAddress();
-        outputFile << " | Tamano: " << currentBlock.getSize();
-        outputFile << " | Estado: " << (currentBlock.isFree() ? "Libre" : "Ocupado") << std::endl;
+        outputContent << "Bloque " << i << " | Inicio: " << currentBlock.getStartAddress();
+        outputContent << " | Tamano: " << currentBlock.getSize();
+        outputContent << " | Estado: " << (currentBlock.isFree() ? "Libre" : "Ocupado") << std::endl;
     }
-    outputFile << "Fragmentacion externa: " << this->manager->calculateExternalFragmentation() << std::endl;
-    outputFile << "Fragmentacion interna: " << this->manager->calculateInternalFragmentation() << std::endl;
+    outputContent << "Fragmentacion externa: " << this->manager->calculateExternalFragmentation() << std::endl;
+    outputContent << "Fragmentacion interna: " << this->manager->calculateInternalFragmentation() << std::endl;
 
+    outputFile << outputContent.str();
     outputFile.close();
-    std::cout << "Archivo de salida guardado correctamente." << std::endl;
+
+    std::cout << "\n----- RESULTADO GUARDADO EN: " << outputPath << " -----" << std::endl;
+    std::cout << outputContent.str();
 }
 
 void CliMenu::run()

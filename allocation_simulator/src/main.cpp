@@ -7,9 +7,9 @@
    Descripcion: Punto de entrada de Implementacion 1, el simulador
    de asignacion de memoria
 */
-#include "include/core/MemoryManager.h"
-#include "include/ui/CliMenu.h"
-#include "include/algorithms/FirstFit.h"
+#include "core/MemoryManager.h"
+#include "ui/CliMenu.h"
+#include "algorithms/FirstFit.h"
 
 int main()
 {

@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de Command
 */
-#include "../../include/io/Command.h"
+#include "io/Command.h"
 
 Command::Command()
 {

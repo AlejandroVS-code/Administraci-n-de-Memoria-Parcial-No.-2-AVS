@@ -6,8 +6,8 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de la estrategia Best Fit
 */
-#include "../../include/algorithms/BestFit.h"
-#include "../../include/model/MemoryBlock.h"
+#include "algorithms/BestFit.h"
+#include "model/MemoryBlock.h"
 
 BestFit::BestFit()
 {

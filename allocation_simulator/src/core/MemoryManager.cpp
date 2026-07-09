@@ -6,10 +6,10 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de MemoryManager
 */
-#include "../../include/core/MemoryManager.h"
-#include "../../include/exceptions/InsufficientMemoryException.h"
-#include "../../include/exceptions/ProcessNotFoundException.h"
-#include "../../include/exceptions/InvalidSizeException.h"
+#include "core/MemoryManager.h"
+#include "exceptions/InsufficientMemoryException.h"
+#include "exceptions/ProcessNotFoundException.h"
+#include "exceptions/InvalidSizeException.h"
 
 MemoryManager::MemoryManager()
 {

@@ -7,7 +7,7 @@
    Descripcion: Implementacion de la interfaz Allocation, solo el
    constructor y destructor, el resto son metodos puros de las hijas
 */
-#include "../../include/algorithms/Allocation.h"
+#include "algorithms/Allocation.h"
 
 Allocation::Allocation()
 {

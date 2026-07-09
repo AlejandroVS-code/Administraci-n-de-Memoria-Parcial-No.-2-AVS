@@ -6,9 +6,9 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de SimulationFileReader
 */
-#include "../../include/io/SimulationFileReader.h"
-#include "../../include/exceptions/SimulatorException.h"
-#include "../../include/exceptions/InvalidCommandException.h"
+#include "io/SimulationFileReader.h"
+#include "exceptions/SimulatorException.h"
+#include "exceptions/InvalidCommandException.h"
 #include <fstream> //Libreria para leer el archivo con ifstream
 #include <sstream> //Libreria para separar los campos con stringstream
 
@@ -123,6 +123,14 @@ std::vector<Command> SimulationFileReader::readCommands(const std::string& fileP
 
     while (std::getline(inputFile, line))
     {
+        //Windows guarda los saltos de linea como \r\n, pero std::getline en Linux
+        //solo corta en el \n y deja el \r pegado al final de la linea
+        //Lo quito aqui para que no se cuele como parte del ultimo campo (la accion C/R)
+        if (!line.empty() && line.at(line.size() - 1) == '\r')
+        {
+            line = line.substr(0, line.size() - 1);
+        }
+
         if (this->isCommentOrEmptyLine(line))
         {
             continue;

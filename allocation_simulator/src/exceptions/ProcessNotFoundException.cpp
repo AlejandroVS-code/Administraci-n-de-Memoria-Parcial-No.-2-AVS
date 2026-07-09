@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de ProcessNotFoundException
 */
-#include "../../include/exceptions/ProcessNotFoundException.h"
+#include "exceptions/ProcessNotFoundException.h"
 #include <sstream>
 
 static std::string buildMessage(int processId)

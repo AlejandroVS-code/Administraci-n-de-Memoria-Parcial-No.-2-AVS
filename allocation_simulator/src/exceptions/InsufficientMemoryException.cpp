@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de InsufficientMemoryException
 */
-#include "../../include/exceptions/InsufficientMemoryException.h"
+#include "exceptions/InsufficientMemoryException.h"
 #include <sstream>
 
 static std::string buildMessage(int requestedSize)
