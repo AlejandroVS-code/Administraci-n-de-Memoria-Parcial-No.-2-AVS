@@ -1,0 +1,6 @@
+# label; size; action (C = crear, R = liberar)
+A; 300; C
+B; 200; C
+C; 150; C
+B; 0; R
+D; 100; C
