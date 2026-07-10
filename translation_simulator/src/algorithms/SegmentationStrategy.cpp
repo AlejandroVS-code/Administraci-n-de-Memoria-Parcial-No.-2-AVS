@@ -6,12 +6,12 @@
    Descripcion: Implementacion de SegmentationStrategy, traduce
    direcciones usando segmentacion de un nivel
 */
-#include "../../include/algorithms/SegmentationStrategy.h"
-#include "../../include/model/VirtualAddress.h"
-#include "../../include/model/PhysicalAddress.h"
-#include "../../include/core/PageTable.h"
-#include "../../include/core/SegmentTable.h"
-#include "../../include/exceptions/SegmentationFaultException.h"
+#include "algorithms/SegmentationStrategy.h"
+#include "model/VirtualAddress.h"
+#include "model/PhysicalAddress.h"
+#include "core/PageTable.h"
+#include "core/SegmentTable.h"
+#include "exceptions/SegmentationFaultException.h"
 
 SegmentationStrategy::SegmentationStrategy(int maxSegmentSize)
 {

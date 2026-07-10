@@ -6,11 +6,11 @@
    Descripcion: Implementacion de PagingStrategy, traduce
    direcciones usando paginacion de un nivel
 */
-#include "../../include/algorithms/PagingStrategy.h"
-#include "../../include/model/VirtualAddress.h"
-#include "../../include/model/PhysicalAddress.h"
-#include "../../include/core/PageTable.h"
-#include "../../include/core/SegmentTable.h"
+#include "algorithms/PagingStrategy.h"
+#include "model/VirtualAddress.h"
+#include "model/PhysicalAddress.h"
+#include "core/PageTable.h"
+#include "core/SegmentTable.h"
 
 PagingStrategy::PagingStrategy(int pageSize)
 {

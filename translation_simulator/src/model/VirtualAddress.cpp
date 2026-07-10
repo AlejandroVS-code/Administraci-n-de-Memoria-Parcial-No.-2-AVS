@@ -5,7 +5,7 @@
    Version: 1.0
    Descripcion: Implementacion de VirtualAddress
 */
-#include "../../include/model/VirtualAddress.h"
+#include "model/VirtualAddress.h"
 
 VirtualAddress::VirtualAddress()
 {

@@ -5,9 +5,9 @@
    Version: 1.0
    Descripcion: Implementacion de TranslationFileReader
 */
-#include "../../include/io/TranslationFileReader.h"
-#include "../../include/exceptions/TranslatorException.h"
-#include "../../include/exceptions/InvalidCommandException.h"
+#include "io/TranslationFileReader.h"
+#include "exceptions/TranslatorException.h"
+#include "exceptions/InvalidCommandException.h"
 #include <fstream> 
 #include <sstream> 
 

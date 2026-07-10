@@ -7,9 +7,9 @@
    Descripcion: Punto de entrada de Implementacion 2, el simulador
    de traduccion de direcciones virtuales a fisicas
 */
-#include "include/core/MemoryTranslator.h"
-#include "include/ui/CliMenu.h"
-#include "include/algorithms/PagingStrategy.h"
+#include "core/MemoryTranslator.h"
+#include "ui/CliMenu.h"
+#include "algorithms/PagingStrategy.h"
 
 int main()
 {

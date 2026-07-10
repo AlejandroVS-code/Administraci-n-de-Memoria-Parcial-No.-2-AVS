@@ -5,7 +5,7 @@
    Version: 1.0
    Descripcion: Implementacion de PhysicalAddress
 */
-#include "../../include/model/PhysicalAddress.h"
+#include "model/PhysicalAddress.h"
 
 PhysicalAddress::PhysicalAddress()
 {

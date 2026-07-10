@@ -6,7 +6,7 @@
    Descripcion: Implementacion de la interfaz TranslationStrategy,
    solo el constructor y destructor, el resto son metodos puros
 */
-#include "../../include/algorithms/TranslationStrategy.h"
+#include "algorithms/TranslationStrategy.h"
 
 TranslationStrategy::TranslationStrategy()
 {

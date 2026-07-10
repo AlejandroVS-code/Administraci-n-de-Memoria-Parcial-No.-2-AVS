@@ -5,10 +5,10 @@
    Version: 1.0
    Descripcion: Implementacion de CliMenu para Implementacion 2
 */
-#include "../../include/ui/CliMenu.h"
-#include "../../include/exceptions/TranslatorException.h"
-#include "../../include/algorithms/PagingStrategy.h"
-#include "../../include/algorithms/SegmentationStrategy.h"
+#include "ui/CliMenu.h"
+#include "exceptions/TranslatorException.h"
+#include "algorithms/PagingStrategy.h"
+#include "algorithms/SegmentationStrategy.h"
 #include <iostream> //Libreria para leer y escribir por consola
 #include <fstream> //Libreria para escribir el archivo de salida
 #include <sstream> //Libreria para construir el contenido antes de guardarlo y mostrarlo

@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de InvalidCommandException
 */
-#include "../../include/exceptions/InvalidCommandException.h"
+#include "exceptions/InvalidCommandException.h"
 
 static std::string buildMessage(const std::string& line)
 {

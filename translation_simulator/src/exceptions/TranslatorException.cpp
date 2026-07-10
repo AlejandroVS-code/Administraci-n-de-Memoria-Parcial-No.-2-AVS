@@ -5,7 +5,7 @@
    Version: 1.0
    Descripcion: Implementacion de TranslatorException
 */
-#include "../../include/exceptions/TranslatorException.h"
+#include "exceptions/TranslatorException.h"
 
 //constructor por defecto
 TranslatorException::TranslatorException(const std::string& message) : std::runtime_error(message)

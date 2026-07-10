@@ -5,7 +5,7 @@
    Version: 1.0
    Descripcion: Implementacion de PageFaultException
 */
-#include "../../include/exceptions/PageFaultException.h"
+#include "exceptions/PageFaultException.h"
 #include <sstream> //Libreria para construir el mensaje con stringstream
 
 //Funcion auxiliar para armar el mensaje antes de pasarselo al constructor de la clase base

@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de Segment
 */
-#include "../../include/model/Segment.h"
+#include "model/Segment.h"
 
 Segment::Segment()
 {

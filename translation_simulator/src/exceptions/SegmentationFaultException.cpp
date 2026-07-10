@@ -5,7 +5,7 @@
    Version: 1.0
    Descripcion: Implementacion de SegmentationFaultException
 */
-#include "../../include/exceptions/SegmentationFaultException.h"
+#include "exceptions/SegmentationFaultException.h"
 #include <sstream> 
 
 //Funcion auxiliar para armar el mensaje antes de pasarselo al constructor de la clase base

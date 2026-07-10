@@ -6,7 +6,7 @@
    Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de Page
 */
-#include "../../include/model/Page.h"
+#include "model/Page.h"
 
 Page::Page()
 {

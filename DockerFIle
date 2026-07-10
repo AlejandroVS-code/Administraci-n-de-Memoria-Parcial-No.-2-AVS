@@ -22,8 +22,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 COPY --from=build /app/build/allocation_simulator/allocation_sim ./bin/allocation_sim
-#COPY --from=build /app/build/translation_simulator/translation_sim ./bin/translation_sim
+COPY --from=build /app/build/translation_simulator/translation_sim ./bin/translation_sim
 COPY data/ ./data/
+COPY translation_simulator/tests/ ./translation_simulator/tests/
 COPY --from=build /app/allocation_simulator/tests ./allocation_simulator/tests
 
 ENV PATH="/app/bin:${PATH}"

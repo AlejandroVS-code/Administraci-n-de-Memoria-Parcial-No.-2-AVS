@@ -5,7 +5,7 @@
    Version: 1.0
    Descripcion: Implementacion de TranslationCommand
 */
-#include "../../include/io/TranslationCommand.h"
+#include "io/TranslationCommand.h"
 
 TranslationCommand::TranslationCommand()
 {

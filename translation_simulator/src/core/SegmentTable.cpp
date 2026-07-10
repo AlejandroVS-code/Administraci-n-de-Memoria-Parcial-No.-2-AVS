@@ -6,8 +6,8 @@
    Descripcion: Implementacion de SegmentTable, tabla de
    segmentos de un solo nivel
 */
-#include "../../include/core/SegmentTable.h"
-#include "../../include/exceptions/SegmentationFaultException.h"
+#include "core/SegmentTable.h"
+#include "exceptions/SegmentationFaultException.h"
 
 SegmentTable::SegmentTable()
 {

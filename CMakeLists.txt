@@ -12,4 +12,4 @@ endif()
 add_compile_options(-Wall -Wextra -Wpedantic)
 
 add_subdirectory(allocation_simulator)
-#add_subdirectory(translation_simulator)
+add_subdirectory(translation_simulator)

@@ -6,9 +6,9 @@
    Descripcion: Implementacion de MemoryTranslator, orquestador
    central de Implementacion 2
 */
-#include "../../include/core/MemoryTranslator.h"
-#include "../../include/exceptions/InvalidAddressException.h"
-#include "../../include/exceptions/TranslatorException.h"
+#include "core/MemoryTranslator.h"
+#include "exceptions/InvalidAddressException.h"
+#include "exceptions/TranslatorException.h"
 
 MemoryTranslator::MemoryTranslator()
 {

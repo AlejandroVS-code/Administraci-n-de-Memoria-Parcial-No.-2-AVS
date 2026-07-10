@@ -6,8 +6,8 @@
    Descripcion: Implementacion de PageTable, tabla de paginas de
    un solo nivel
 */
-#include "../../include/core/PageTable.h"
-#include "../../include/exceptions/PageFaultException.h"
+#include "core/PageTable.h"
+#include "exceptions/PageFaultException.h"
 
 PageTable::PageTable()
 {

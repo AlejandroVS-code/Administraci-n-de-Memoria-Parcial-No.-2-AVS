@@ -5,7 +5,7 @@
    Version: 1.0
    Descripcion: Implementacion de Frame
 */
-#include "../../include/model/Frame.h"
+#include "model/Frame.h"
 
 Frame::Frame()
 {
