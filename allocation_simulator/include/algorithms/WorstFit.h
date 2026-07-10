@@ -3,7 +3,6 @@
    Fecha de creacion: 08/07/2026
    Ultima modificacion: 08/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Declaracion de la estrategia Worst Fit
 */
 #ifndef WORST_FIT_H

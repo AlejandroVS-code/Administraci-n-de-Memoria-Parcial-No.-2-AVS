@@ -9,7 +9,7 @@
 #ifndef MEMORY_BLOCK_H
 #define MEMORY_BLOCK_H
 
-class Process; //Forward declaration para evitar include circular con Process.h
+class Process; 
 
 // Representa un bloque de memoria, puede estar libre u ocupado por un proceso
 class MemoryBlock

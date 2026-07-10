@@ -3,7 +3,6 @@
    Fecha de creacion: 10/07/2026
    Ultima modificacion: 10/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de WebServer
 */
 #include "ui/WebServer.h"

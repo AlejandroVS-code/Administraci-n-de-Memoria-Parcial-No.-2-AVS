@@ -25,7 +25,7 @@ CliMenu::CliMenu(MemoryTranslator* translator)
 
 CliMenu::~CliMenu()
 {
-    //No hago delete de translator porque este menu no es dueno de ese objeto
+    
 }
 
 void CliMenu::showMenu() const

@@ -3,7 +3,6 @@
    Fecha de creacion: 08/07/2026
    Ultima modificacion: 08/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de CliMenu
 */
 #include "ui/CliMenu.h"
@@ -27,7 +26,7 @@ CliMenu::CliMenu(MemoryManager* manager)
 
 CliMenu::~CliMenu()
 {
-    //No hago delete de manager porque este menu no es dueno de ese objeto
+    
 }
 
 void CliMenu::showMenu() const
@@ -111,7 +110,7 @@ void CliMenu::loadAndRunFile()
     std::cout << "Ingrese el nombre del archivo (debe estar en data/allocation/): ";
     std::cin >> fileName;
 
-    //Armo la ruta completa, el usuario ya no necesita escribir la carpeta
+    //Arma la ruta completa, el usuario ya no necesita escribir la carpeta
     std::string fullPath = "data/allocation/" + fileName;
 
     std::vector<Command> commands;

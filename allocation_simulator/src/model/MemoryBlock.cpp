@@ -3,11 +3,10 @@
    Fecha de creacion: 08/07/2026
    Ultima modificacion: 08/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de la clase MemoryBlock
 */
 #include "model/MemoryBlock.h"
-#include "model/Process.h" //Necesito la definicion completa, en el .h bastaba el forward declaration
+#include "model/Process.h"
 
 MemoryBlock::MemoryBlock()
 {
@@ -20,7 +19,7 @@ MemoryBlock::MemoryBlock()
 
 MemoryBlock::MemoryBlock(int startAddress, int size)
 {
-    //Asigno los valores recibidos dentro del cuerpo del constructor
+    //Asigna los valores recibidos dentro del cuerpo del constructor
     this->startAddress = startAddress;
     this->size = size;
     this->free = true; //Todo bloque nuevo nace libre
@@ -29,7 +28,7 @@ MemoryBlock::MemoryBlock(int startAddress, int size)
 
 MemoryBlock::~MemoryBlock()
 {
-    //No hago delete de process porque este bloque no es dueno de ese objeto
+    
 }
 
 bool MemoryBlock::isFree() const
@@ -54,14 +53,14 @@ Process* MemoryBlock::getProcess() const
 
 void MemoryBlock::allocate(Process* process)
 {
-    //Ocupo el bloque con el proceso recibido
+    //Ocupa el bloque con el proceso recibido
     this->process = process;
     this->free = false;
 }
 
 void MemoryBlock::release()
 {
-    //Libero el bloque, pero no borro el proceso porque no soy dueno de el
+    //se Libera el bloque, pero no borra el proceso
     this->process = nullptr;
     this->free = true;
 }

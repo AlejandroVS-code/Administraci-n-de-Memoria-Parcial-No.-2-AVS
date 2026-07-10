@@ -3,7 +3,6 @@
    Fecha de creacion: 09/07/2026
    Ultima modificacion: 09/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de Segment
 */
 #include "model/Segment.h"
