@@ -1,8 +1,7 @@
-# Prueba de Paginacion: todos los mapeos existen, todas las traducciones son exitosas
+# Prueba de Paginacion: Mapeos dispersos con traducciones exitosas secuenciales
 # type; valor1; valor2; valor3
-P; 0; 3; 0
-P; 1; 5; 0
-P; 2; 0; 0
-T; 70; 0; 0
-T; 130; 0; 0
-T; 10; 0; 0
+P; 1; 8; 0
+P; 3; 4; 0
+P; 5; 11; 0
+T; 64; 0; 0
+T; 192; 0; 0

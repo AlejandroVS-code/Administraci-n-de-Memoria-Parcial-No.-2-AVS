@@ -22,6 +22,7 @@ class MemoryManager
 {
 private:
     //Atributos
+    int nextProcessId;
     int totalSize;
     std::vector<MemoryBlock> blocks; //Composicion fuerte, el manager es dueno de los bloques (se guardan por valor)
     std::map<int, Process> processes; //Los Process se guardan por valor, el map garantiza que sus direcciones no cambien
@@ -34,6 +35,8 @@ public:
     //Metodos
     MemoryManager(); //Constructor por defecto
     MemoryManager(int totalSize, Allocation* initialAllocation); //Constructor con parametros
+    int generateProcessId();
+    
 
     //Prohibido copiar: allocation es un puntero dueno (delete en el destructor).
     //Si se permitiera copiar por defecto, dos manager apuntarian al mismo Allocation
@@ -46,6 +49,7 @@ public:
     bool allocateProcess(const Process& process);
     bool releaseProcess(int processId);
 
+    void reset();
     void setAllocation(Allocation* newAllocation); //Libera la estrategia vieja con delete y guarda la nueva
 
     int calculateExternalFragmentation() const;

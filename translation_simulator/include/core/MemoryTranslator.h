@@ -26,6 +26,7 @@ private:
     PageTable pageTable; 
     SegmentTable segmentTable; 
     TranslationStrategy* strategy; 
+    
 
 public:
     MemoryTranslator(); //Constructor por defecto
@@ -34,6 +35,7 @@ public:
     //Copia deshabilitada, evitar doble delete de strategy
     MemoryTranslator(const MemoryTranslator& other) = delete;
     MemoryTranslator& operator=(const MemoryTranslator& other) = delete;
+    void reset();
 
     PhysicalAddress translateAddress(const VirtualAddress& virtualAddress) const;
 

@@ -15,15 +15,22 @@ MemoryManager::MemoryManager()
 {
     this->totalSize = 0;
     this->allocation = nullptr;
+    this->nextProcessId = 1;
 }
 
 MemoryManager::MemoryManager(int totalSize, Allocation* initialAllocation)
 {
     this->totalSize = totalSize;
     this->allocation = initialAllocation;
-
+    this->nextProcessId = 1;
     MemoryBlock initialBlock(0, totalSize);
     this->blocks.push_back(initialBlock);
+}
+int MemoryManager::generateProcessId()
+{
+    int assignedId = this->nextProcessId;
+    this->nextProcessId++;
+    return assignedId;
 }
 
 MemoryManager::~MemoryManager()
@@ -124,7 +131,7 @@ int MemoryManager::calculateExternalFragmentation() const
 
 int MemoryManager::calculateInternalFragmentation() const
 {
-    //Uso iterador aqui porque std::map no permite recorrido con indice como un vector
+
     int totalFragmentation = 0;
     std::map<int, Process>::const_iterator processIterator;
     for (processIterator = this->processes.begin(); processIterator != this->processes.end(); ++processIterator)
@@ -137,4 +144,13 @@ int MemoryManager::calculateInternalFragmentation() const
 const std::vector<MemoryBlock>& MemoryManager::getBlocks() const
 {
     return this->blocks;
+}
+void MemoryManager::reset()
+{
+    this->blocks.clear();
+    this->processes.clear();
+    this->nextProcessId = 1;
+
+    MemoryBlock initialBlock(0, this->totalSize);
+    this->blocks.push_back(initialBlock);
 }

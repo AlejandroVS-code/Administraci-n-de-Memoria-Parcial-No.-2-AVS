@@ -1,0 +1,11 @@
+# label; size; action (C = crear, R = liberar)
+# Disenado para que First, Best y Worst Fit elijan bloques distintos
+P; 200; C
+H; 150; C
+W; 350; C
+D; 170; C
+K; 130; C
+P; 0; R
+W; 0; R
+K; 0; R
+F; 120; C

@@ -1,5 +1,7 @@
-# Prueba de Paginacion: genera un Page Fault intencional
+# Prueba de Paginacion: Simulacion de ejecucion normal interrumpida por Page Fault
 # type; valor1; valor2; valor3
-P; 0; 2; 0
+P; 0; 6; 0
+P; 2; 9; 0
 T; 50; 0; 0
-T; 200; 0; 0
+T; 130; 0; 0
+T; 70; 0; 0  

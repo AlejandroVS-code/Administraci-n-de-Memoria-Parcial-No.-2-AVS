@@ -24,6 +24,7 @@ public:
 
     void addMapping(int pageNumber, int frameNumber);
     bool isMapped(int pageNumber) const;
+    void clear();
 
     //Lanza PageFaultException si la pagina no esta mapeada
     int translatePage(int pageNumber) const;

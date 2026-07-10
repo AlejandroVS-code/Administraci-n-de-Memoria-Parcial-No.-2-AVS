@@ -18,6 +18,10 @@ SegmentTable::~SegmentTable()
 {
     //Destructor vacio, no maneja punteros
 }
+void SegmentTable::clear()
+{
+    this->entries.clear();
+}
 
 void SegmentTable::addSegment(int segmentNumber, int baseAddress, int limit)
 {

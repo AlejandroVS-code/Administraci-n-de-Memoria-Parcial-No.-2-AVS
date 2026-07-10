@@ -19,6 +19,8 @@ add_executable(translation_sim
     src/io/TranslationCommand.cpp
     src/io/TranslationFileReader.cpp
     src/ui/CliMenu.cpp
+    src/ui/WebServer.cpp
 )
 
 target_include_directories(translation_sim PRIVATE include)
+target_link_libraries(translation_sim PRIVATE Threads::Threads)

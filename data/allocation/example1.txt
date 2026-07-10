@@ -1,6 +1,7 @@
 # label; size; action (C = crear, R = liberar)
-A; 300; C
-B; 200; C
-C; 150; C
-B; 0; R
-D; 100; C
+# Escenario de asignación mixta con manejo de excepciones de etiquetas
+P; 320; C
+S; 210; C
+K; 140; C
+X; 0; R
+M; 135; C

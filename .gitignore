@@ -1,0 +1,12 @@
+# Carpeta de build de CMake (se regenera con cmake -S . -B build)
+build/
+
+# Archivos de salida de las pruebas (se regeneran al correr los simuladores)
+allocation_simulator/tests/*_output.txt
+translation_simulator/tests/*_output.txt
+
+# Archivos propios del sistema operativo / editor
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

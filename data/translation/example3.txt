@@ -1,8 +1,10 @@
-# Prueba de Segmentacion: ANTES de cargar este archivo, cambiar a Segmentacion
+# Prueba de Segmentacion: configuracion de segmentos y traduccion de direcciones
+# IMPORTANTE: antes de cargar este archivo, cambiar la estrategia a Segmentacion
+# con maxSegmentSize = 100 (los comandos T de abajo asumen ese valor exacto,
+# ya que la direccion virtual completa se calcula como segmento*100 + offset)
 # type; valor1; valor2; valor3
-S; 0; 500; 50
-S; 1; 700; 30
-T; 20; 0; 0
-T; 80; 0; 0
+S; 0; 415; 65
+S; 1; 830; 125
+T; 25; 0; 0
 T; 150; 0; 0
-T; 250; 0; 0
+T; 90; 0; 0

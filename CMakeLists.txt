@@ -11,5 +11,9 @@ endif()
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
+# httplib usa hilos internamente (el servidor corre en su propio hilo,
+# separado del menu de consola), 
+find_package(Threads REQUIRED)
+
 add_subdirectory(allocation_simulator)
 add_subdirectory(translation_simulator)

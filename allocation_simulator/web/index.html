@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Simulador de Asignacion de Memoria</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f4f4;
+        color: #222;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+    .subtitle {
+        color: #666;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+    .panel {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    .panel h2 {
+        font-size: 15px;
+        margin-top: 0;
+        margin-bottom: 12px;
+    }
+    .row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    input, select, button {
+        padding: 6px 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    input {
+        width: 120px;
+    }
+    button {
+        background: #2b6cb0;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #245a94;
+    }
+    button.secondary {
+        background: #718096;
+    }
+    button.secondary:hover {
+        background: #5c6b7a;
+    }
+    .memory-bar {
+        display: flex;
+        width: 100%;
+        height: 60px;
+        border: 1px solid #999;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+    .block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: white;
+        border-right: 1px solid rgba(0,0,0,0.2);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 2px;
+    }
+    .block.free {
+        background: #cbd5e0;
+        color: #444;
+    }
+    .block.used {
+        background: #2f855a;
+    }
+    .stats {
+        display: flex;
+        gap: 20px;
+        font-size: 13px;
+        color: #444;
+    }
+    .block-list {
+        font-size: 13px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .block-list th, .block-list td {
+        text-align: left;
+        padding: 4px 8px;
+        border-bottom: 1px solid #eee;
+    }
+    #log {
+        background: #1a1a1a;
+        color: #d0f0d0;
+        font-family: monospace;
+        font-size: 12px;
+        padding: 10px;
+        border-radius: 4px;
+        height: 140px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+    }
+    .error-msg {
+        color: #c53030;
+        font-size: 13px;
+        margin-top: 6px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Simulador de Asignacion de Memoria</h1>
+<div class="subtitle">Implementacion 1 - Parcial No. 2, Sistemas Operativos</div>
+
+<div class="panel">
+    <h2>Estado de la memoria</h2>
+    <div class="memory-bar" id="memoryBar"></div>
+    <div class="stats">
+        <div>Fragmentacion externa: <strong id="externalFrag">-</strong></div>
+        <div>Fragmentacion interna: <strong id="internalFrag">-</strong></div>
+    </div>
+    <table class="block-list" id="blockTable">
+        <thead><tr><th>#</th><th>Inicio</th><th>Tamano</th><th>Estado</th><th>Proceso</th></tr></thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div class="panel">
+    <h2>Crear proceso</h2>
+    <div class="row">
+        <input type="text" id="processName" placeholder="Nombre (ej: A)">
+        <input type="number" id="processSize" placeholder="Tamano">
+        <button onclick="createProcess()">Crear</button>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Liberar proceso</h2>
+    <div class="row">
+        <input type="number" id="releaseId" placeholder="Id del proceso">
+        <button class="secondary" onclick="releaseProcess()">Liberar</button>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Estrategia de asignacion</h2>
+    <div class="row">
+        <select id="strategySelect">
+            <option value="first">First Fit</option>
+            <option value="best">Best Fit</option>
+            <option value="worst">Worst Fit</option>
+        </select>
+        <button onclick="changeStrategy()">Cambiar</button>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Cargar archivo de entrada</h2>
+    <div class="row">
+        <input type="text" id="fileName" placeholder="ej: example1.txt" style="width: 200px;">
+        <button onclick="loadFile()">Cargar y ejecutar</button>
+    </div>
+    <div style="font-size: 12px; color: #888;">Busca el archivo dentro de data/allocation/</div>
+</div>
+
+
+<div class="panel">
+    <h2>Reiniciar simulacion</h2>
+    <div class="row">
+        <button class="secondary" onclick="resetSimulator()">Reiniciar memoria</button>
+    </div>
+    <div style="font-size: 12px; color: #888;">Borra todos los procesos y vuelve la memoria a un solo bloque libre</div>
+</div>
+
+<div class="panel">
+    <h2>Registro</h2>
+    <div id="log"></div>
+</div>
+
+<script>
+    const API = "";
+
+    async function resetSimulator() {
+    const response = await fetch(API + "/api/reset", { method: "POST" });
+    const data = await response.json();
+
+    if (data.error) {
+        logLine("Error al reiniciar: " + data.error);
+    } else {
+        logLine("--- Memoria reiniciada ---");
+        renderState(data);
+    }
+}
+
+    function logLine(text) {
+        const log = document.getElementById("log");
+        log.textContent += text + "\n";
+        log.scrollTop = log.scrollHeight;
+    }
+
+    async function refreshState() {
+        try {
+            const response = await fetch(API + "/api/state");
+            const data = await response.json();
+            renderState(data);
+        } catch (error) {
+            logLine("Error consultando el estado: " + error);
+        }
+    }
+
+    function renderState(data) {
+        const bar = document.getElementById("memoryBar");
+        bar.innerHTML = "";
+
+        const totalSize = data.blocks.reduce((sum, b) => sum + b.size, 0);
+
+        data.blocks.forEach(block => {
+            const div = document.createElement("div");
+            div.className = "block " + (block.free ? "free" : "used");
+            div.style.width = ((block.size / totalSize) * 100) + "%";
+            div.title = "Inicio: " + block.startAddress + " | Tamano: " + block.size;
+            div.textContent = block.free ? "Libre" : (block.processName || ("P" + block.processId));
+            bar.appendChild(div);
+        });
+
+        document.getElementById("externalFrag").textContent = data.externalFragmentation;
+        document.getElementById("internalFrag").textContent = data.internalFragmentation;
+
+        const tbody = document.querySelector("#blockTable tbody");
+        tbody.innerHTML = "";
+        data.blocks.forEach((block, index) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+                "<td>" + index + "</td>" +
+                "<td>" + block.startAddress + "</td>" +
+                "<td>" + block.size + "</td>" +
+                "<td>" + (block.free ? "Libre" : "Ocupado") + "</td>" +
+                "<td>" + (block.free ? "-" : (block.processName + " (id " + block.processId + ")")) + "</td>";
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function createProcess() {
+        const name = document.getElementById("processName").value;
+        const size = document.getElementById("processSize").value;
+
+        if (!name || !size) {
+            logLine("Falta nombre o tamano.");
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.set("name", name);
+        params.set("size", size);
+
+        const response = await fetch(API + "/api/process", { method: "POST", body: params });
+        const data = await response.json();
+
+        if (data.error) {
+            logLine("Error al crear proceso: " + data.error);
+        } else {
+            logLine("Proceso '" + name + "' creado.");
+            renderState(data);
+        }
+
+        document.getElementById("processName").value = "";
+        document.getElementById("processSize").value = "";
+    }
+
+    async function releaseProcess() {
+        const id = document.getElementById("releaseId").value;
+        if (!id) {
+            logLine("Falta el id del proceso.");
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.set("id", id);
+
+        const response = await fetch(API + "/api/process/release", { method: "POST", body: params });
+        const data = await response.json();
+
+        if (data.error) {
+            logLine("Error al liberar proceso: " + data.error);
+        } else {
+            logLine("Proceso " + id + " liberado.");
+            renderState(data);
+        }
+
+        document.getElementById("releaseId").value = "";
+    }
+
+    async function changeStrategy() {
+        const strategy = document.getElementById("strategySelect").value;
+        const params = new URLSearchParams();
+        params.set("strategy", strategy);
+
+        const response = await fetch(API + "/api/strategy", { method: "POST", body: params });
+        const data = await response.json();
+
+        if (data.error) {
+            logLine("Error al cambiar estrategia: " + data.error);
+        } else {
+            logLine("Estrategia cambiada a " + strategy + ".");
+            renderState(data);
+        }
+    }
+
+    async function loadFile() {
+        const fileName = document.getElementById("fileName").value;
+        if (!fileName) {
+            logLine("Falta el nombre del archivo.");
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.set("fileName", fileName);
+
+        const response = await fetch(API + "/api/load-file", { method: "POST", body: params });
+        const data = await response.json();
+
+        if (data.error) {
+            logLine("Error al cargar archivo: " + data.error);
+        } else {
+            logLine("--- Ejecucion de " + fileName + " ---");
+            logLine(data.log);
+            renderState(data.state);
+        }
+    }
+
+    refreshState();
+</script>
+
+</body>
+</html>

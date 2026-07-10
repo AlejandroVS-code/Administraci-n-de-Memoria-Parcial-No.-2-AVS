@@ -35,6 +35,16 @@ MemoryTranslator::~MemoryTranslator()
     delete this->strategy;
 }
 
+void MemoryTranslator::reset()
+{
+    for (size_t i = 0; i < this->frames.size(); i++)
+    {
+        this->frames.at(i).release();
+    }
+    this->pageTable.clear();
+    this->segmentTable.clear();
+}
+
 PhysicalAddress MemoryTranslator::translateAddress(const VirtualAddress& virtualAddress) const
 {
     

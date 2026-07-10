@@ -24,6 +24,7 @@ public:
 
     void addSegment(int segmentNumber, int baseAddress, int limit);
     bool exists(int segmentNumber) const;
+    void clear();
 
     //Lanza SegmentationFaultException si el segmento no existe
     const Segment& getSegment(int segmentNumber) const;

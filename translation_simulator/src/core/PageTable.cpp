@@ -18,6 +18,10 @@ PageTable::~PageTable()
 {
     //Destructor vacio, no maneja punteros
 }
+void PageTable::clear()
+{
+    this->entries.clear();
+}
 
 void PageTable::addMapping(int pageNumber, int frameNumber)
 {

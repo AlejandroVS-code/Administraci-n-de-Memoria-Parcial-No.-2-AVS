@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Simulador de Traduccion de Direcciones</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f4f4;
+        color: #222;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 { font-size: 20px; margin-bottom: 4px; }
+    .subtitle { color: #666; margin-bottom: 20px; font-size: 14px; }
+    .panel {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    .panel h2 { font-size: 15px; margin-top: 0; margin-bottom: 12px; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+    input, select, button {
+        padding: 6px 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    input { width: 120px; }
+    button { background: #2b6cb0; color: white; border: none; cursor: pointer; }
+    button:hover { background: #245a94; }
+    .frames-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+        margin-bottom: 10px;
+    }
+    .frame-cell {
+        width: 40px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        border-radius: 3px;
+        color: white;
+    }
+    .frame-cell.free { background: #cbd5e0; color: #444; }
+    .frame-cell.used { background: #2f855a; }
+    table {
+        font-size: 13px;
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid #eee; }
+    #log {
+        background: #1a1a1a;
+        color: #d0f0d0;
+        font-family: monospace;
+        font-size: 12px;
+        padding: 10px;
+        border-radius: 4px;
+        height: 140px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+    }
+    .result-box {
+        background: #ebf8ff;
+        border: 1px solid #90cdf4;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-top: 8px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Simulador de Traduccion de Direcciones</h1>
+<div class="subtitle">Implementacion 2 - Parcial No. 2, Sistemas Operativos</div>
+
+<div class="panel">
+    <h2>Estado de la memoria fisica (marcos)</h2>
+    <div class="frames-bar" id="framesBar"></div>
+</div>
+
+<div class="panel">
+    <h2>Tabla de paginas</h2>
+    <table id="pageTable"><thead><tr><th>Pagina</th><th>Marco</th><th>Valida</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div class="panel">
+    <h2>Tabla de segmentos</h2>
+    <table id="segmentTable"><thead><tr><th>Segmento</th><th>Base</th><th>Limite</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div class="panel">
+    <h2>Estrategia activa</h2>
+    <div class="row">
+        <select id="strategySelect" onchange="toggleStrategyInputs()">
+            <option value="paging">Paginacion</option>
+            <option value="segmentation">Segmentacion</option>
+        </select>
+        <input type="number" id="pageSizeInput" placeholder="pageSize">
+        <input type="number" id="maxSegmentSizeInput" placeholder="maxSegmentSize" style="display:none;">
+        <button onclick="changeStrategy()">Cambiar</button>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Cargar mapeo de pagina</h2>
+    <div class="row">
+        <input type="number" id="pageNumberInput" placeholder="Pagina">
+        <input type="number" id="frameNumberInput" placeholder="Marco">
+        <button onclick="loadPage()">Cargar</button>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Cargar segmento</h2>
+    <div class="row">
+        <input type="number" id="segmentNumberInput" placeholder="Segmento">
+        <input type="number" id="baseAddressInput" placeholder="Base">
+        <input type="number" id="limitInput" placeholder="Limite">
+        <button onclick="loadSegment()">Cargar</button>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Traducir direccion</h2>
+    <div class="row">
+        <input type="number" id="addressInput" placeholder="Direccion virtual">
+        <button onclick="translateAddress()">Traducir</button>
+    </div>
+    <div class="result-box" id="translateResult" style="display:none;"></div>
+</div>
+
+<div class="panel">
+    <h2>Cargar archivo de entrada</h2>
+    <div class="row">
+        <input type="text" id="fileName" placeholder="ej: example1.txt" style="width: 200px;">
+        <button onclick="loadFile()">Cargar y ejecutar</button>
+    </div>
+    <div style="font-size: 12px; color: #888;">Busca el archivo dentro de data/translation/. Recuerda activar la estrategia correcta antes.</div>
+</div>
+
+
+<div class="panel">
+    <h2>Reiniciar simulacion</h2>
+    <div class="row">
+        <button onclick="resetSimulator()">Reiniciar traductor</button>
+    </div>
+    <div style="font-size: 12px; color: #888;">Libera todos los marcos y borra las tablas de paginas y segmentos</div>
+</div>
+
+<div class="panel">
+    <h2>Registro</h2>
+    <div id="log"></div>
+</div>
+
+<script>
+    function logLine(text) {
+        const log = document.getElementById("log");
+        log.textContent += text + "\n";
+        log.scrollTop = log.scrollHeight;
+    }
+    async function resetSimulator() {
+    const response = await fetch("/api/reset", { method: "POST" });
+    const data = await response.json();
+
+    if (data.error) {
+        logLine("Error al reiniciar: " + data.error);
+    } else {
+        logLine("--- Traductor reiniciado ---");
+        renderState(data);
+    }
+}
+
+    function toggleStrategyInputs() {
+        const strategy = document.getElementById("strategySelect").value;
+        document.getElementById("pageSizeInput").style.display = strategy === "paging" ? "inline-block" : "none";
+        document.getElementById("maxSegmentSizeInput").style.display = strategy === "segmentation" ? "inline-block" : "none";
+    }
+
+    async function refreshState() {
+        try {
+            const response = await fetch("/api/state");
+            const data = await response.json();
+            renderState(data);
+        } catch (error) {
+            logLine("Error consultando el estado: " + error);
+        }
+    }
+
+    function renderState(data) {
+        const framesBar = document.getElementById("framesBar");
+        framesBar.innerHTML = "";
+        data.frames.forEach(frame => {
+            const div = document.createElement("div");
+            div.className = "frame-cell " + (frame.free ? "free" : "used");
+            div.textContent = frame.frameNumber;
+            div.title = frame.free ? "Libre" : "Ocupado";
+            framesBar.appendChild(div);
+        });
+
+        const pageBody = document.querySelector("#pageTable tbody");
+        pageBody.innerHTML = "";
+        data.pages.forEach(page => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = "<td>" + page.pageNumber + "</td><td>" + page.frameNumber + "</td><td>" + (page.valid ? "Si" : "No") + "</td>";
+            pageBody.appendChild(tr);
+        });
+
+        const segmentBody = document.querySelector("#segmentTable tbody");
+        segmentBody.innerHTML = "";
+        data.segments.forEach(segment => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = "<td>" + segment.segmentNumber + "</td><td>" + segment.baseAddress + "</td><td>" + segment.limit + "</td>";
+            segmentBody.appendChild(tr);
+        });
+    }
+
+    async function changeStrategy() {
+        const strategy = document.getElementById("strategySelect").value;
+        const params = new URLSearchParams();
+        params.set("strategy", strategy);
+
+        if (strategy === "paging") {
+            params.set("pageSize", document.getElementById("pageSizeInput").value);
+        } else {
+            params.set("maxSegmentSize", document.getElementById("maxSegmentSizeInput").value);
+        }
+
+        const response = await fetch("/api/strategy", { method: "POST", body: params });
+        const data = await response.json();
+
+        if (data.error) {
+            logLine("Error al cambiar estrategia: " + data.error);
+        } else {
+            logLine("Estrategia cambiada a " + strategy + ".");
+            renderState(data);
+        }
+    }
+
+    async function loadPage() {
+        const pageNumber = document.getElementById("pageNumberInput").value;
+        const frameNumber = document.getElementById("frameNumberInput").value;
+
+        const params = new URLSearchParams();
+        params.set("pageNumber", pageNumber);
+        params.set("frameNumber", frameNumber);
+
+        const response = await fetch("/api/page", { method: "POST", body: params });
+        const data = await response.json();
+
+        if (data.error) {
+            logLine("Error al mapear pagina: " + data.error);
+        } else {
+            logLine("Pagina " + pageNumber + " mapeada a marco " + frameNumber + ".");
+            renderState(data);
+        }
+    }
+
+    async function loadSegment() {
+        const segmentNumber = document.getElementById("segmentNumberInput").value;
+        const baseAddress = document.getElementById("baseAddressInput").value;
+        const limit = document.getElementById("limitInput").value;
+
+        const params = new URLSearchParams();
+        params.set("segmentNumber", segmentNumber);
+        params.set("baseAddress", baseAddress);
+        params.set("limit", limit);
+
+        const response = await fetch("/api/segment", { method: "POST", body: params });
+        const data = await response.json();
+
+        if (data.error) {
+            logLine("Error al cargar segmento: " + data.error);
+        } else {
+            logLine("Segmento " + segmentNumber + " cargado (base=" + baseAddress + ", limite=" + limit + ").");
+            renderState(data);
+        }
+    }
+
+    async function translateAddress() {
+        const address = document.getElementById("addressInput").value;
+        const params = new URLSearchParams();
+        params.set("address", address);
+
+        const response = await fetch("/api/translate", { method: "POST", body: params });
+        const data = await response.json();
+
+        const resultBox = document.getElementById("translateResult");
+        resultBox.style.display = "block";
+
+        if (data.error) {
+            resultBox.textContent = "Error: " + data.error;
+            logLine("Error al traducir VA=" + address + ": " + data.error);
+        } else {
+            resultBox.textContent = "VA=" + address + " -> PA=" + data.physicalAddress;
+            logLine("VA=" + address + " -> PA=" + data.physicalAddress);
+        }
+    }
+
+    async function loadFile() {
+        const fileName = document.getElementById("fileName").value;
+        if (!fileName) {
+            logLine("Falta el nombre del archivo.");
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.set("fileName", fileName);
+
+        const response = await fetch("/api/load-file", { method: "POST", body: params });
+        const data = await response.json();
+
+        if (data.error) {
+            logLine("Error al cargar archivo: " + data.error);
+        } else {
+            logLine("--- Ejecucion de " + fileName + " ---");
+            logLine(data.log);
+            renderState(data.state);
+        }
+    }
+
+    toggleStrategyInputs();
+    refreshState();
+</script>
+
+</body>
+</html>
