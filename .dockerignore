@@ -2,5 +2,3 @@ build/
 .git/
 .gitignore
 *.md
-allocation_simulator/tests/*_output.txt
-translation_simulator/tests/*_output.txt
