@@ -1,0 +1,8 @@
+# Prueba de Segmentacion: ANTES de cargar este archivo, cambiar a Segmentacion
+# type; valor1; valor2; valor3
+S; 0; 500; 50
+S; 1; 700; 30
+T; 20; 0; 0
+T; 80; 0; 0
+T; 150; 0; 0
+T; 250; 0; 0

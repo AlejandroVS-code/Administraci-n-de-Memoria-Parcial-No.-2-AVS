@@ -1,0 +1,5 @@
+# Prueba de Paginacion: genera un Page Fault intencional
+# type; valor1; valor2; valor3
+P; 0; 2; 0
+T; 50; 0; 0
+T; 200; 0; 0
