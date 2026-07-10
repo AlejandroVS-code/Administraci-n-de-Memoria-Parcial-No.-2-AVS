@@ -3,7 +3,6 @@
    Fecha de creacion: 08/07/2026
    Ultima modificacion: 08/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de SimulationFileReader
 */
 #include "io/SimulationFileReader.h"
@@ -38,7 +37,7 @@ bool SimulationFileReader::isCommentOrEmptyLine(const std::string& line) const
 
 std::string SimulationFileReader::trim(const std::string& text) const
 {
-    //Quito espacios al inicio y al final del texto, paso a paso, sin nada compacto
+    //Se quita espacios al inicio y al final del texto, paso a paso, sin nada compacto
     size_t start = 0;
     size_t end = text.size();
 
@@ -55,7 +54,7 @@ std::string SimulationFileReader::trim(const std::string& text) const
 
 Command SimulationFileReader::parseLine(const std::string& line) const
 {
-    //Separo la linea por ';' y guardo cada campo en un vector
+   
     std::vector<std::string> fields;
     std::stringstream lineStream(line);
     std::string field;
@@ -125,7 +124,6 @@ std::vector<Command> SimulationFileReader::readCommands(const std::string& fileP
     {
         //Windows guarda los saltos de linea como \r\n, pero std::getline en Linux
         //solo corta en el \n y deja el \r pegado al final de la linea
-        //Lo quito aqui para que no se cuele como parte del ultimo campo (la accion C/R)
         if (!line.empty() && line.at(line.size() - 1) == '\r')
         {
             line = line.substr(0, line.size() - 1);

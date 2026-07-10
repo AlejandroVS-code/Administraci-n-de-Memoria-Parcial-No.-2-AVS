@@ -3,7 +3,6 @@
    Fecha de creacion: 10/07/2026
    Ultima modificacion: 10/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de WebServer para Implementacion 2,
    expone una API HTTP sobre MemoryTranslator como interfaz grafica
    adicional al menu de consola
@@ -31,7 +30,7 @@ WebServer::WebServer(MemoryTranslator* translator, int port)
 
 WebServer::~WebServer()
 {
-    //No hago delete de translator porque este servidor no es dueno de ese objeto
+    
 }
 
 std::string WebServer::escapeJson(const std::string& text) const

@@ -3,7 +3,6 @@
    Fecha de creacion: 08/07/2026
    Ultima modificacion: 08/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Implementacion de la clase Process
 */
 #include "model/Process.h"
@@ -19,7 +18,7 @@ Process::Process()
 
 Process::Process(int id, const std::string& name, int requestedSize)
 {
-    //Asigno los valores recibidos dentro del cuerpo del constructor
+    //Asigna los valores recibidos dentro del cuerpo del constructor
     this->id = id;
     this->name = name;
     this->requestedSize = requestedSize;
@@ -28,7 +27,7 @@ Process::Process(int id, const std::string& name, int requestedSize)
 
 Process::~Process()
 {
-    //Destructor vacio, el proceso no es dueno de ningun puntero
+    //Destructor vacio
 }
 
 bool Process::isValidData(int requestedSize)

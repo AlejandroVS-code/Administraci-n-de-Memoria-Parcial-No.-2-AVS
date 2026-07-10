@@ -3,7 +3,6 @@
    Fecha de creacion: 08/07/2026
    Ultima modificacion: 08/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Declaracion de SimulationFileReader, lee el archivo
    de entrada y lo convierte en una lista de Command. No conoce
    MemoryManager ni Allocation, solo se encarga de parsear texto

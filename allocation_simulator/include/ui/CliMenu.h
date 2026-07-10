@@ -3,7 +3,6 @@
    Fecha de creacion: 08/07/2026
    Ultima modificacion: 08/07/2026
    Version: 1.0
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Declaracion de CliMenu, la interfaz de consola
    del simulador. Ahora tambien permite cargar y ejecutar un
    archivo de entrada y cambiar de estrategia en caliente

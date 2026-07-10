@@ -3,7 +3,6 @@
    Fecha de creacion: 09/07/2026
    Ultima modificacion: 10/07/2026
    Version: 1.1
-   Licencia: Uso academico, Universidad del Valle
    Descripcion: Punto de entrada de Implementacion 2, el simulador
    de traduccion de direcciones virtuales a fisicas. Corre el menu
    de consola de siempre, y ademas levanta un servidor web en un
@@ -18,7 +17,7 @@
 
 int main()
 {
-    //Tamano de memoria fisica y de marco, coinciden con los archivos de prueba en data/translation/
+    //Tamano de memoria fisica y de marco
     int physicalMemorySize = 1024;
     int frameSize = 64;
 
